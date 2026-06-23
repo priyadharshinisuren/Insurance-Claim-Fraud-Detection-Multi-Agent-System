@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardian AI — Insurance Claims Fraud Detection</title>
+    <!-- Google Fonts: DM Sans & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar: Simulation Metrics & Configuration -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="brand">
+                    <i data-lucide="shield-check" class="brand-icon"></i>
+                    <div>
+                        <h1>Guardian AI</h1>
+                        <span class="brand-tagline">Multi-Agent Fraud Detection</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats/KPI Summary -->
+            <div class="stats-container">
+                <div class="section-title">SYSTEM STATUS</div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-label">Fraud Prevented</span>
+                        <span class="stat-value text-green">$184,200</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Avg Risk Score</span>
+                        <span class="stat-value text-amber">34.2</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Auto-Approve Rate</span>
+                        <span class="stat-value">62%</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">API Mode</span>
+                        <span id="api-mode-badge" class="badge badge-blue">Offline (Demo)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Configuration Section -->
+            <div class="config-container">
+                <div class="section-title">CLAIM SELECTOR</div>
+                <div class="preset-selector">
+                    <button class="preset-btn active" data-preset="low_risk">
+                        <div class="preset-info">
+                            <span class="preset-name">Jane Doe (Low Risk)</span>
+                            <span class="preset-details">POL-1001 · $850 · Camry</span>
+                        </div>
+                        <i data-lucide="check" class="check-icon"></i>
+                    </button>
+                    <button class="preset-btn" data-preset="suspicious">
+                        <div class="preset-info">
+                            <span class="preset-name">Bob Johnson (Suspicious)</span>
+                            <span class="preset-details">POL-3003 · $3,200 · F-150</span>
+                        </div>
+                        <i data-lucide="check" class="check-icon"></i>
+                    </button>
+                    <button class="preset-btn" data-preset="high_risk">
+                        <div class="preset-info">
+                            <span class="preset-name">John Smith (High Risk)</span>
+                            <span class="preset-details">POL-2002 · $4,500 · Civic</span>
+                        </div>
+                        <i data-lucide="check" class="check-icon"></i>
+                    </button>
+                </div>
+
+                <div class="action-section">
+                    <button id="run-pipeline-btn" class="btn btn-primary">
+                        <i data-lucide="play" class="btn-icon"></i>
+                        Run Agent Pipeline
+                    </button>
+                </div>
+            </div>
+            
+            <div class="sidebar-footer">
+                <p>Google DeepMind Antigravity © 2026</p>
+            </div>
+        </aside>
+
+        <!-- Main Dashboard Workspace -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="main-header">
+                <div class="header-left">
+                    <h2>Active Inspection Console</h2>
+                    <p class="text-muted">Analyze claim documentation, verify severity, scan database, and score fraud risk.</p>
+                </div>
+                <div class="header-right">
+                    <button id="theme-toggle" class="btn btn-secondary btn-icon-only">
+                        <i data-lucide="sun" id="theme-icon-sun"></i>
+                        <i data-lucide="moon" id="theme-icon-moon" style="display: none;"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Agent Execution Flow Visualization -->
+            <section class="flow-section card">
+                <div class="card-header">
+                    <h3>Multi-Agent Workflow Progression</h3>
+                    <span id="pipeline-status" class="status-indicator idle">System Idle</span>
+                </div>
+                <div class="flow-visualizer">
+                    <div class="agent-node" id="node-doc">
+                        <div class="node-icon-wrapper">
+                            <i data-lucide="file-text"></i>
+                        </div>
+                        <span class="node-name">Document Agent</span>
+                        <span class="node-role">OCR & Matching</span>
+                        <div class="node-pulse"></div>
+                    </div>
+                    <div class="flow-connector" id="conn-1"></div>
+                    
+                    <div class="agent-node" id="node-dmg">
+                        <div class="node-icon-wrapper">
+                            <i data-lucide="camera"></i>
+                        </div>
+                        <span class="node-name">Damage Agent</span>
+                        <span class="node-role">Vision Analysis</span>
+                        <div class="node-pulse"></div>
+                    </div>
+                    <div class="flow-connector" id="conn-2"></div>
+                    
+                    <div class="agent-node" id="node-fraud">
+                        <div class="node-icon-wrapper">
+                            <i data-lucide="shield-alert"></i>
+                        </div>
+                        <span class="node-name">Fraud Agent</span>
+                        <span class="node-role">DB Scan & Score</span>
+                        <div class="node-pulse"></div>
+                    </div>
+                    <div class="flow-connector" id="conn-3"></div>
+                    
+                    <div class="agent-node" id="node-rec">
+                        <div class="node-icon-wrapper">
+                            <i data-lucide="landmark"></i>
+                        </div>
+                        <span class="node-name">Claim Agent</span>
+                        <span class="node-role">Synthesis & Payout</span>
+                        <div class="node-pulse"></div>
+                    </div>
+                </div>
+
+                <!-- Real-time Agent Log Shell -->
+                <div class="log-shell">
+                    <div class="log-shell-header">
+                        <i data-lucide="terminal" class="shell-icon"></i>
+                        <span>Live Agent Logs</span>
+                    </div>
+                    <div class="log-shell-body" id="log-console">
+                        <div class="log-line system-line">[SYSTEM] Guardian AI fraud pipeline loaded. Ready to run simulation.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Agent Outputs Grid -->
+            <section class="outputs-grid">
+                <!-- Card 1: Document OCR -->
+                <div class="card output-card" id="card-ocr">
+                    <div class="card-title-bar">
+                        <div class="title-with-icon">
+                            <i data-lucide="file-check" class="card-icon text-blue"></i>
+                            <h3>1. Document OCR Findings</h3>
+                        </div>
+                        <span class="badge badge-gray" id="ocr-badge">Pending</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="ocr-details">
+                            <div class="grid-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Policy ID</span>
+                                    <span class="detail-value text-mono" id="val-policy-id">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Claimant Name</span>
+                                    <span class="detail-value" id="val-claimant-name">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Accident Date</span>
+                                    <span class="detail-value" id="val-accident-date">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Claim Amount</span>
+                                    <span class="detail-value text-mono" id="val-claim-amount">-</span>
+                                </div>
+                            </div>
+                            <div class="text-block-title">Extracted Document text</div>
+                            <pre class="ocr-text-box" id="val-ocr-text">OCR text will appear here once the pipeline executes...</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Damage Vision Analysis -->
+                <div class="card output-card" id="card-damage">
+                    <div class="card-title-bar">
+                        <div class="title-with-icon">
+                            <i data-lucide="search-code" class="card-icon text-blue"></i>
+                            <h3>2. Image Damage Report</h3>
+                        </div>
+                        <span class="badge badge-gray" id="dmg-badge">Pending</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="damage-details">
+                            <div class="grid-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Detected Car Make/Model</span>
+                                    <span class="detail-value" id="val-car-model">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Estimated Repair Cost</span>
+                                    <span class="detail-value text-mono" id="val-repair-cost">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Damage Severity</span>
+                                    <span class="detail-value" id="val-dmg-severity">-</span>
+                                </div>
+                            </div>
+                            <div class="text-block-title">Computer Vision Visual Assessment</div>
+                            <div class="vision-assessment-box" id="val-dmg-desc">Image analysis notes will appear here...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Fraud Scan & Scoring -->
+                <div class="card output-card" id="card-fraud">
+                    <div class="card-title-bar">
+                        <div class="title-with-icon">
+                            <i data-lucide="activity" class="card-icon text-amber"></i>
+                            <h3>3. Fraud Score & Database Scan</h3>
+                        </div>
+                        <span class="badge badge-gray" id="fraud-badge">Pending</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="fraud-details">
+                            <div class="score-display-wrapper">
+                                <div class="score-radial">
+                                    <span class="score-num" id="val-fraud-score">-</span>
+                                    <span class="score-lbl">Risk Score</span>
+                                </div>
+                                <div class="score-meta">
+                                    <span class="score-level-text" id="val-risk-level">-</span>
+                                    <div class="risk-sparkline-bg">
+                                        <div class="risk-sparkline-fill" id="val-sparkline-fill" style="width: 0%;"></div>
+                                    </div>
+                                    <span class="text-muted text-xs">Based on claims frequency and OCR matches</span>
+                                </div>
+                            </div>
+                            <div class="text-block-title">Flagged Fraud Signals</div>
+                            <ul class="signals-list" id="val-signals-list">
+                                <li class="no-signals">No alerts flagged. Execute system.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4: Synthesis & Recommendation -->
+                <div class="card output-card highlighted-card" id="card-recommendation">
+                    <div class="card-title-bar">
+                        <div class="title-with-icon">
+                            <i data-lucide="scale" class="card-icon text-green"></i>
+                            <h3>4. Claims Agent Decision</h3>
+                        </div>
+                        <span class="badge badge-gray" id="rec-badge">Pending</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="rec-details">
+                            <div class="decision-box">
+                                <div class="decision-outcome">
+                                    <span class="decision-label">Final Recommendation</span>
+                                    <span class="decision-value" id="val-decision">-</span>
+                                </div>
+                                <div class="decision-payout">
+                                    <span class="decision-label">Recommended Payout</span>
+                                    <span class="decision-payout-value" id="val-payout">-</span>
+                                </div>
+                            </div>
+                            <div class="text-block-title">Decision Rationale Executive Summary</div>
+                            <div class="markdown-rationale" id="val-rationale">
+                                Rationale summary will populate here once the final agent makes its recommendation.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
