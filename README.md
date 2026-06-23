@@ -118,4 +118,5 @@ uvicorn src.server:app --reload --port 8000
 Open frontend/index.html in browser.
 Verify that selecting presets (Low Risk, Suspicious, High Risk) triggers appropriate step-by-step animations and yields the correct final recommendations.
 Verify layout responsiveness across desktop and mobile screen sizes.
-youtube link: https://lnkd.in/ga_xixV8
+youtube link: https://www.youtube.com/watch?v=ypJALJesB2Q
+
